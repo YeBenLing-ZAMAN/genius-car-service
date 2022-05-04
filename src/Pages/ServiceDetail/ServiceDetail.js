@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import useServiceDetails from '../../hooks/useServiceDetails';
 
 const ServiceDetail = () => {
     const { serviceId } = useParams();
-    const [service, setService] = useState({});
-
-    useEffect(() => {
-        const url = `http://localhost:5000/service/${serviceId}`
-        fetch(url)
-            .then(res => res.json())
-            .then(data => setService(data));
-    })
+    const [service] = useServiceDetails(serviceId);
     return (
         <div className='d-flex flex-column flex-md-row w-100 w-md-75 m-auto p-3'>
             <div className='p-3 w-100 w-md-25 d-flex content-center justify-content-md-end'>
@@ -22,7 +16,7 @@ const ServiceDetail = () => {
                     <h3>Price: <small className='text-primary'> {service.price}</small></h3>
                     <p>{service.description}</p>
                     <div className=''>
-                        <Link to="/checkout">
+                        <Link to={`/checkout/${serviceId}`}>
                             <button className='btn btn-primary'>Proceed Checkout</button>
                         </Link>
                     </div>
