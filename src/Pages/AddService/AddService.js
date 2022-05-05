@@ -7,7 +7,7 @@ const AddService = () => {
 
     const onSubmit = data => {
         console.log(data);
-        const url = `http://localhost:5000/addservice`;
+        const url = `https://morning-cliffs-42830.herokuapp.com/addservice`;
         fetch(url, {
             method: 'POST', // or 'PUT'
             headers: {

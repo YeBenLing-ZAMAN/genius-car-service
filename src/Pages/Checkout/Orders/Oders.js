@@ -9,31 +9,39 @@ const Orders = () => {
     useEffect(() => {
 
         const getorders = async () => {
-            const email = user.email;
-            const url = `http://localhost:5000/orders?email=${email}`;
-            try{
+            const email = user?.email;
+            const url = `https://morning-cliffs-42830.herokuapp.com/orders?email=${email}`;
+            try {
                 const { data } = await axios.get(url, {
-                    headers:{
-                        authorization:`Bearer ${localStorage.getItem('accessToken')}`
+                    headers: {
+                        authorization: `Bearer ${localStorage.getItem('accessToken')}`
                     }
                 });
                 setOrders(data);
-            }catch(error){
+            } catch (error) {
                 console.log(error.message);
-                if(error.response?.status === 401 || error.response?.status ===403){
+                if (error.response?.status === 401 || error.response?.status === 403) {
                     signOut(auth);
                     navigator('/login');
                 }
             }
-            }
+        }
         getorders();
-        
+
     }, [user]);
 
 
     return (
-        <div>
-            your order : {orders.length}
+        <div className='w-50 mx-auto'>
+            <h2>your order : {orders.length}</h2>
+            {
+                orders.map(order =>
+                    <div key={order._id}>
+                        <p>{order.email} : {order.service}</p>
+                    </div>
+                )
+            }
+
         </div>
     );
 };
